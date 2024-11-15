@@ -20,7 +20,9 @@ class BillfoldController extends Controller
         $tempBill = new Billfold();
         $tempBill['name'] = $request->get('name');
         $tempBill['discount_date'] = $request->get('discount_date');
-        $tempBill['user_id'] = 1;
+        $userId = $this->validateSession();
+        if ($userId == '') return redirect()->route('loginView');
+        $tempBill['user_id'] = $userId;
         $tempBill->save();
 
         return redirect('/billfolds');
